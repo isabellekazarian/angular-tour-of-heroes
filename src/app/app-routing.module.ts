@@ -1,10 +1,34 @@
+
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+// imports necessary to create routes
+import { HeroesComponent } from './heroes/heroes.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 
+// Routes tell the Router which view to display when a user clicks a link
+// or pastes a URL into the browser address bar
+const routes: Routes = [
+
+  // default route
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'heroes', component: HeroesComponent }, // path - string matched to the URL
+  { path: 'detail/:id', component: HeroDetailComponent }
+
+];
+
+
+//@NgModule metadata initializes router and starts it listening for browser location changes
 @NgModule({
+
+  // adds routerModule and configures it with routs provided above
   imports: [RouterModule.forRoot(routes)],
+
+  // makes routerModule available throughout the web application
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
