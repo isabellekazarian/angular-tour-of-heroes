@@ -1,6 +1,6 @@
 
-import { Hero } from './hero';
-import { HEROES } from './mock-heroes';
+import { Hero } from '../models/hero';
+//import { HEROES } from '../mock-heroes';
 
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -8,6 +8,9 @@ import { MessageService } from './message.service';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/catch';
+
 
 
 @Injectable({
@@ -33,7 +36,7 @@ export class HeroService {
   // with the address of the heroes resource on the server.
   // Base is the resource that requests are made to
   // and collectionName is the heroes data object in in-memory-data-service.ts.
-  private heroesUrl = 'api/heroes';  // URL to web api
+  private heroesUrl = 'api/heroes/';  // URL to web api
 
 
  /** GET heroes from the server */
@@ -71,12 +74,12 @@ export class HeroService {
 
 
   /** POST: add a new hero to the server */
-  addHero(hero: Hero): Observable<Hero> {
-
-    return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
-      tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
-      catchError(this.handleError<Hero>('addHero'))
-    );
+  addHero(hero: Hero): Promise<Hero> {
+    return this.http.get(this.heroesUrl + hero).toPromise()
+    .then((newHero: Hero) => {
+      this.log(`added hero w/ id=${newHero.id}`);
+      return newHero;
+    }).catch(this.handleError<Hero>('addHero'));
     // server generates new hero ID
   }
 

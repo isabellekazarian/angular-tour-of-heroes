@@ -1,9 +1,9 @@
 // HeroesComponent Class
 
 import { Component, OnInit } from '@angular/core';
-import { Hero } from '../hero'; //imports hero.ts interface
-import { HeroService } from '../hero.service';
-import { MessageService } from '../message.service';
+import { Hero } from '../../models/hero'; //imports hero.ts interface
+import { HeroService } from '../../services/hero.service';
+import { MessageService } from '../../services/message.service';
 
 //@Component is a decorator function that specifies the Angular metadata for the component
 
@@ -37,7 +37,7 @@ export class HeroesComponent implements OnInit {
 
     // when addHero saves successfully, subscribe reads the hero and adds to the display list 
     this.heroService.addHero({ name } as Hero)
-      .subscribe(hero => { this.heroes.push(hero); });
+      .then(hero => { this.heroes.push(hero); });
   }
 
   delete(hero: Hero): void {
