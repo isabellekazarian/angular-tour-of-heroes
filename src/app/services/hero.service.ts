@@ -8,16 +8,23 @@ import { MessageService } from './message.service';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/catch';
 
 
 
-@Injectable({
-  providedIn: 'root'
-})
+
+@Injectable({ providedIn: 'root' })
 
 export class HeroService {
+
+  // Define the heroesUrl of the form :base/:collectionName
+  // with the address of the heroes resource on the server.
+  // Base is the resource that requests are made to
+  // and collectionName is the heroes data object in in-memory-data-service.ts.
+  private heroesUrl = 'api/heroes/';  // URL to web api
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   // inject MessageService in HeroService
   // service-in-service
@@ -32,11 +39,7 @@ export class HeroService {
     this.messageService.add(`HeroService: ${message}`);
   }
 
-  // Define the heroesUrl of the form :base/:collectionName
-  // with the address of the heroes resource on the server.
-  // Base is the resource that requests are made to
-  // and collectionName is the heroes data object in in-memory-data-service.ts.
-  private heroesUrl = 'api/heroes/';  // URL to web api
+
 
 
  /** GET heroes from the server */
@@ -46,6 +49,20 @@ export class HeroService {
       .pipe(
         tap(_ => this.log('fetched heroes')),
         catchError(this.handleError<Hero[]>('getHeroes', []))
+      );
+  }
+
+  /** GET hero by id. Return `undefined` when id not found */
+  getHeroNo404<Data>(id: number): Observable<Hero> {
+    const url = `${this.heroesUrl}/?id=${id}`;
+    return this.http.get<Hero[]>(url)
+      .pipe(
+        map(heroes => heroes[0]), // returns a {0|1} element array
+        tap(h => {
+          const outcome = h ? `fetched` : `did not find`;
+          this.log(`${outcome} hero id=${id}`);
+        }),
+        catchError(this.handleError<Hero>(`getHero id=${id}`))
       );
   }
 
@@ -68,18 +85,13 @@ export class HeroService {
     );
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
-
   /** POST: add a new hero to the server */
   addHero(hero: Hero): Promise<Hero> {
     return this.http.get(this.heroesUrl + hero).toPromise()
     .then((newHero: Hero) => {
       this.log(`added hero w/ id=${newHero.id}`);
       return newHero;
-    }).catch(this.handleError<Hero>('addHero'));
+    }).catch(err => this.handleError<Hero>('addHero').call(err).toPromise());
     // server generates new hero ID
   }
 
