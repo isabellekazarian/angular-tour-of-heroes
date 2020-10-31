@@ -16,10 +16,10 @@ export class DashboardComponent implements OnInit {
     this.getHeroes();
   }
 
-  // returns heroes at pos #2,3,4,5 
+  // returns heroes at pos #1-4
   // subscribes these to the hero array
   getHeroes(): void {
     this.heroService.getHeroes()
-      .subscribe(heroes => this.heroes = heroes.slice(1, 5));
+      .subscribe(heroes => this.heroes = heroes.slice(0, 4));
   }
 }

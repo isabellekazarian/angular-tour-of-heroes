@@ -3,7 +3,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../../models/hero'; //imports hero.ts interface
 import { HeroService } from '../../services/hero.service';
-import { MessageService } from '../../services/message.service';
 
 //@Component is a decorator function that specifies the Angular metadata for the component
 
@@ -17,17 +16,16 @@ export class HeroesComponent implements OnInit {
 
   // define component property to allow for binding
   heroes: Hero[];
-
-
-  getHeroes(): void {
-    this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
-  }
-
   
-  constructor(private heroService: HeroService, private messageService: MessageService) { }
+  constructor(private heroService: HeroService) { }
 
   ngOnInit() {
     this.getHeroes();
+  }
+
+  getHeroes(): void {
+    this.heroService.getHeroes()
+    .subscribe(heroes => this.heroes = heroes);
   }
 
 

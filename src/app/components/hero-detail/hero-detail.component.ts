@@ -1,11 +1,10 @@
 // HeroeDetailComponent Class
-
-import { Hero } from '../../models/hero';
 import { Component, OnInit, Input } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
+import { Hero } from '../../models/hero';
 import { HeroService } from '../../services/hero.service';
 
 
@@ -16,7 +15,7 @@ import { HeroService } from '../../services/hero.service';
 })
 export class HeroDetailComponent implements OnInit {
 
-  @Input() hero: Hero;
+  hero: Hero;
 
   // ActivatedRoute holds information about the route per instance
   // HeroService will get hero to display
@@ -35,8 +34,9 @@ export class HeroDetailComponent implements OnInit {
     // pull hero id from static img of route information
     const id = +this.route.snapshot.paramMap.get('id'); // + converts str to number
 
-    this.heroService.getHero(id).subscribe(hero => this.hero = hero);
-
+    this.heroService.getHero(id)
+      .subscribe(hero => this.hero = hero);
+    
   }
 
   goBack(): void {

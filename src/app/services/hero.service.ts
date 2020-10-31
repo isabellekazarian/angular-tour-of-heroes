@@ -20,7 +20,7 @@ export class HeroService {
   // with the address of the heroes resource on the server.
   // Base is the resource that requests are made to
   // and collectionName is the heroes data object in in-memory-data-service.ts.
-  private heroesUrl = 'api/heroes/';  // URL to web api
+  private heroesUrl = 'api/heroes';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -87,7 +87,7 @@ export class HeroService {
 
   /** POST: add a new hero to the server */
   addHero(hero: Hero): Promise<Hero> {
-    return this.http.get(this.heroesUrl + hero).toPromise()
+    return this.http.post(this.heroesUrl, hero).toPromise()
     .then((newHero: Hero) => {
       this.log(`added hero w/ id=${newHero.id}`);
       return newHero;
