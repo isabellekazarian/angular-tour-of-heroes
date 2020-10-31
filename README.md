@@ -1,27 +1,23 @@
-# AngularTourOfHeroes
+# Angular Tour Of Heroes
+This application presents an interactive list of superheroes.
+The user can add, remove, update, search, and view details for each superhero.
+There is also a message log to track the application activity.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.6.
+## Prerequisites
+* Requires Angular 10
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Getting Started
 
-## Code scaffolding
+To run, navigate to `\src` in a command prompt.
+Enter `ng serve` and wait for the application to fully load.
+Navigate to `http://localhost:4200/` in a web browser as indicated by Angular CLI.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+## Using the program
+The user can navigate the website via the navigation buttons at the top (`Dashboard` and `Heroes`), or by clicking on any hero for a detail view.
+Heroes can be added and removed via the `Heroes` widget.
+The top 4 heroes will be displayed on the `Dashboard`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Reference
+[Angular Tour of Heroes App](https://angular.io/tutorial/toh-pt0)
